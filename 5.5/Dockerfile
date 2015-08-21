@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM buildpack-deps:jessie
 
 # persistent / runtime deps
 RUN apt-get update && apt-get install -y ca-certificates curl libpcre3 librecode0 libsqlite3-0 libxml2 --no-install-recommends && rm -r /var/lib/apt/lists/*
@@ -58,6 +58,8 @@ RUN buildDeps=" \
 	&& { find /usr/local/bin /usr/local/sbin -type f -executable -exec strip --strip-all '{}' + || true; } \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps \
 	&& make clean
+
+RUN curl -sS https://getcomposer.org/installer | php
 
 COPY docker-php-ext-* /usr/local/bin/
 
