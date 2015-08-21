@@ -72,7 +72,7 @@ RUN buildDeps=" \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false -o APT::AutoRemove::SuggestsImportant=false $buildDeps \
 	&& make clean
 
-RUN curl -sS https://getcomposer.org/installer | php
+RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY docker-php-ext-* /usr/local/bin/
 
